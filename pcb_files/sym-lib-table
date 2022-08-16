@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "xiao-rp2040")(type "KiCad")(uri "/home/cartex10/pp/kicad/kb_lib.pretty/xiao-rp2040.kicad_sym")(options "")(descr ""))
+  (lib (name "dk_Interface-I-O-Expanders")(type "Legacy")(uri "/home/cartex10/pp/kicad/digikey-symbols/dk_Interface-I-O-Expanders.lib")(options "")(descr ""))
+)
