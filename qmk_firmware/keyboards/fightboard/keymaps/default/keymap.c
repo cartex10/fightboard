@@ -13,7 +13,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *             │ - │ = │BCK│ESC│
      *     ┌───┐   ┌───┬───┬───┬───┐
      *     │ W │   │ U │ I │ O │ P │
-     * ┌───┼───┼───┼───┤───┼───┤───┘
+     * ┌───┼───┼───┼───┼───┼───┼───┤
      * │ A │ S │ D │ J │ K │ L │ ; │
      * └───┴───┴───┴───┴───┴───┴───┘
      *               KC_MINS, KC_EQL, KC_BSPC, KC_ESC,
