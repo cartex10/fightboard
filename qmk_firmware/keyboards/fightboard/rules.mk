@@ -3,6 +3,7 @@ BOARD = QMK_PM2040
 BOOTLOADER = rp2040
 CUSTOM_MATRIX = lite
 EEPROM_DRIVER = i2c
+RGBLIGHT_ENABLE = yes
 
 VPATH += drivers/gpio
 SRC += matrix.c mcp23018.c

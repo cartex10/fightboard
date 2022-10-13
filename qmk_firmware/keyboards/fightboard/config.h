@@ -19,7 +19,7 @@
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
 #define MATRIX_ROWS 1
-#define MATRIX_COLS 16
+#define MATRIX_COLS 17
 
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET // Activates the double-tap behavior
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 200U // Timeout window in ms in which the double tap can occur.
@@ -32,3 +32,7 @@
 #define I2C_DRIVER I2CD2
 #define I2C1_SDA_PIN GP6
 #define I2C1_SCL_PIN GP7
+
+#define NOP_FUDGE 0.4
+#define RGB_DI_PIN GP26
+#define RGBLED_NUM 2
