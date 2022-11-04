@@ -9,6 +9,7 @@
 
 extern matrix_row_t matrix[MATRIX_ROWS];
 extern rgblight_config_t rgblight_config;
+
 int LEDHoldCount = 0;
 
 void matrix_init_custom(void) {
@@ -21,6 +22,11 @@ void matrix_init_custom(void) {
     mcp23018_set_config(MCP_ADDR, mcp23018_PORTA, ALL_INPUT);
     mcp23018_set_config(MCP_ADDR, mcp23018_PORTB, ALL_INPUT);
     setPinInputHigh(GP28);
+
+    rgblight_init();
+    rgblight_config.hue = 0;
+    rgblight_config.sat = 255;
+    rgblight_config.val = 50;
 }
 
 bool matrix_scan_custom(uint16_t current_matrix[]) {
@@ -53,13 +59,8 @@ bool matrix_scan_custom(uint16_t current_matrix[]) {
     if (LEDpin) { LEDHoldCount += 1; }
     else { LEDHoldCount = 0; }
     if (LEDHoldCount == 1000) { 
-        rgblight_toggle_noeeprom();
-        if (rgblight_config.enable == 1) {
-            //for (int LEDnum = 0; LEDnum <= RGBLED_NUM; LEDnum++) {
-            //                }
-        rgblight_setrgb(RGB_ORANGE);
-        }
-        eeconfig_debug_rgblight();
+        rgblight_toggle();
+        //eeconfig_debug_rgblight();
     }
 
     //uprintf("current_matrix = %x\n\n\n\n", *current_matrix);
