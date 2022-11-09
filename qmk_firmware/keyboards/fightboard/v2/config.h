@@ -7,7 +7,6 @@
  * Feature disable options
  *  These options are also useful to firmware size reduction.
  */
-
 /* disable debug print */
 //#define NO_DEBUG
 

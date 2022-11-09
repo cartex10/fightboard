@@ -1,7 +1,9 @@
 #include QMK_KEYBOARD_H
 #include "mcp23018.h"
 #include "i2c_master.h"
+#ifndef NO_PRINT
 #include "print.h"
+#endif
 
 #define MCP_ADDR (0x20)
 //#define mcp_keys { 'W', 'A', 'S', 'D', 'U', 'I', 'O', 'P', 'J', 'K', 'L', ';', '-', '=', "BKSP", "ESC"}
@@ -53,16 +55,22 @@ bool matrix_scan_custom(uint16_t current_matrix[]) {
             current_matrix[row] = temp;
             matrix_has_changed = true;
         }
-        //uprintf("Row #%d = %x\n", row, temp);
+#ifndef NO_PRINT
+        uprintf("Row #%d = %x\n", row, temp);
+#endif
     }
     
     if (LEDpin) { LEDHoldCount += 1; }
     else { LEDHoldCount = 0; }
     if (LEDHoldCount == 1000) { 
         rgblight_toggle();
-        //eeconfig_debug_rgblight();
+#ifndef NO_PRINT
+        eeconfig_debug_rgblight();
+#endif
     }
 
-    //uprintf("current_matrix = %x\n\n\n\n", *current_matrix);
+#ifndef NO_PRINT
+    uprintf("current_matrix = %x\n\n\n\n", *current_matrix);
+#endif
     return matrix_has_changed;
 }
