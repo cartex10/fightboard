@@ -1,4 +1,4 @@
-21314714455753901
+21318057233518912
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -89551,12 +89551,26 @@ Integrated Circuit
 14
 14
 kb_lib
+SOP65P780X200-24N
+(SS)24-Lead(SSOP)
+Integrated Circuit
+0
+24
+24
+kb_lib
 XIAO-RP2040
 
 
 0
 28
 14
+kb_lib
+mx-choc socket keyswitch
+
+
+0
+3
+2
 keyswitches
 Kailh_socket_MX
 MX-style keyswitch with Kailh socket mount
