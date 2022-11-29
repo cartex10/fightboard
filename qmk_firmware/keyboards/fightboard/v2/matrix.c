@@ -7,10 +7,9 @@
 
 #define MCP_ADDR (0x20)
 //#define mcp_keys { 'W', 'A', 'S', 'D', 'U', 'I', 'O', 'P', 'J', 'K', 'L', ';', '-', '=', "BKSP", "ESC"}
-//#define mcp_pins { A0 , A3 , A2 , A1 , B3 , B2 , B1 , B0 , A7 , A6 , A5 , A4 , B4 , B5 ,   B6  ,   B7 }
+//#define mcp_pins { A7 , A6 , A5 , A4 , B4 , B5 , B6 , B7 , A0 , A1 , A2 , A3 , B0 , B1 ,   B2  ,   B3 }
 
 extern matrix_row_t matrix[MATRIX_ROWS];
-extern rgblight_config_t rgblight_config;
 
 int LEDHoldCount = 0;
 
@@ -24,11 +23,6 @@ void matrix_init_custom(void) {
     mcp23018_set_config(MCP_ADDR, mcp23018_PORTA, ALL_INPUT);
     mcp23018_set_config(MCP_ADDR, mcp23018_PORTB, ALL_INPUT);
     setPinInputHigh(GP28);
-
-    rgblight_init();
-    rgblight_config.hue = 0;
-    rgblight_config.sat = 255;
-    rgblight_config.val = 50;
 }
 
 bool matrix_scan_custom(uint16_t current_matrix[]) {
@@ -55,22 +49,19 @@ bool matrix_scan_custom(uint16_t current_matrix[]) {
             current_matrix[row] = temp;
             matrix_has_changed = true;
         }
-#ifndef NO_PRINT
-        uprintf("Row #%d = %x\n", row, temp);
-#endif
+        //uprintf("Row #%d = %x\n", row, temp);
     }
     
     if (LEDpin) { LEDHoldCount += 1; }
     else { LEDHoldCount = 0; }
     if (LEDHoldCount == 1000) { 
-        rgblight_toggle();
-#ifndef NO_PRINT
-        eeconfig_debug_rgblight();
-#endif
+        rgb_matrix_toggle();/* 
+        if (rgb_matrix_config.enable == true) {
+            rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+            //rgb_matrix_set_color_all(RGB_BLUE);
+        }*/  
     }
 
-#ifndef NO_PRINT
-    uprintf("current_matrix = %x\n\n\n\n", *current_matrix);
-#endif
+    //uprintf("current_matrix = %x\n\n\n\n", *current_matrix);
     return matrix_has_changed;
 }

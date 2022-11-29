@@ -22,22 +22,22 @@
     "layouts": {
         "LAYOUT": {
             "layout": [
-                {"label":"W", "x":1, "y":1, "matrix": [0, 0]},
-                {"label":"D", "x":2, "y":2, "matrix": [0, 1]},
-                {"label":"S", "x":1, "y":2, "matrix": [0, 2]},
-                {"label":"A", "x":0, "y":2, "matrix": [0, 3]},
-                {"label":";", "x":8, "y":2, "matrix": [0, 4]},
-                {"label":"L", "x":7, "y":2, "matrix": [0, 5]},
-                {"label":"K", "x":6, "y":2, "matrix": [0, 6]},
-                {"label":"J", "x":5, "y":2, "matrix": [0, 7]},
-                {"label":"P", "x":8, "y":1, "matrix": [0, 8]},
-                {"label":"O", "x":7, "y":1, "matrix": [0, 9]},
-                {"label":"I", "x":6, "y":1, "matrix": [0, 10]},
-                {"label":"U", "x":5, "y":1, "matrix": [0, 11]},
-                {"label":"-", "x":5.25, "y":0, "w":0.5, "h":0.5, "matrix": [0, 12]},
-                {"label":"=", "x":6.25, "y":0, "w":0.5, "h":0.5, "matrix": [0, 13]}, 
-                {"label":"BCK", "x":7.25, "y":0, "w":0.5, "h":0.5, "matrix": [0, 14]}, 
-                {"label":"ESC", "x":8.25, "y":0, "w":0.5, "h":0.5, "matrix": [0, 15]},
+                {"label":"J", "x":5, "y":2, "matrix": [0, 0]},
+                {"label":"K", "x":6, "y":2, "matrix": [0, 1]},
+                {"label":"L", "x":7, "y":2, "matrix": [0, 2]},
+                {"label":";", "x":8, "y":2, "matrix": [0, 3]},
+                {"label":"D", "x":2, "y":2, "matrix": [0, 4]},
+                {"label":"S", "x":1, "y":2, "matrix": [0, 5]},
+                {"label":"A", "x":0, "y":2, "matrix": [0, 6]},
+                {"label":"W", "x":1, "y":1, "matrix": [0, 7]},
+                {"label":"-", "x":5.25, "y":0, "w":0.5, "h":0.5, "matrix": [0, 8]},
+                {"label":"=", "x":6.25, "y":0, "w":0.5, "h":0.5, "matrix": [0, 9]}, 
+                {"label":"BCK", "x":7.25, "y":0, "w":0.5, "h":0.5, "matrix": [0, 10]}, 
+                {"label":"ESC", "x":8.25, "y":0, "w":0.5, "h":0.5, "matrix": [0, 11]},
+                {"label":"U", "x":5, "y":1, "matrix": [0, 12]},
+                {"label":"I", "x":6, "y":1, "matrix": [0, 13]},
+                {"label":"O", "x":7, "y":1, "matrix": [0, 14]},
+                {"label":"P", "x":8, "y":1, "matrix": [0, 15]},
                 {"label":"LED", "x":1.25, "y":0, "w":0.5, "h":0.5, "matrix": [0, 16]}
             ]
         }
