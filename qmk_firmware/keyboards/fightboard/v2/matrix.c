@@ -14,54 +14,76 @@ extern matrix_row_t matrix[MATRIX_ROWS];
 int LEDHoldCount = 0;
 
 void matrix_init_custom(void) {
-    setPinOutput(GP27);
-    writePinLow(GP27);
-    wait_ms(100);
-    togglePin(GP27);
+	setPinOutput(GP27);
+	writePinLow(GP27);
+	wait_ms(100);
+	togglePin(GP27);
 
-    mcp23018_init(MCP_ADDR);
-    mcp23018_set_config(MCP_ADDR, mcp23018_PORTA, ALL_INPUT);
-    mcp23018_set_config(MCP_ADDR, mcp23018_PORTB, ALL_INPUT);
-    setPinInputHigh(GP28);
+	mcp23018_init(MCP_ADDR);
+	mcp23018_set_config(MCP_ADDR, mcp23018_PORTA, ALL_INPUT);
+	mcp23018_set_config(MCP_ADDR, mcp23018_PORTB, ALL_INPUT);
+	setPinInputHigh(GP28);
 }
 
 bool matrix_scan_custom(uint16_t current_matrix[]) {
-    bool matrix_has_changed = false;
+	bool matrix_has_changed = false;
 
-    uint16_t mcpPins = 0x0000;
-    mcp23018_readPins_all(MCP_ADDR, &mcpPins);
-    mcpPins = ~mcpPins;
+	uint16_t mcpPins = 0x0000;
+	mcp23018_readPins_all(MCP_ADDR, &mcpPins);
+	mcpPins = ~mcpPins;
 
-    bool LEDpin = readPin(GP28);
-    LEDpin = !LEDpin;
+	bool LEDpin = readPin(GP28);
+	LEDpin = !LEDpin;
 
-    for (int row = 0; row < 2; row++) {
-        int temp;
-        switch (row) {
-            case 0:
-                temp = mcpPins;
-                break;
-            case 1:
-                temp = LEDpin;
-                break;
-        }
-        if (current_matrix[row] != temp) {
-            current_matrix[row] = temp;
-            matrix_has_changed = true;
-        }
-        //uprintf("Row #%d = %x\n", row, temp);
-    }
-    
-    if (LEDpin) { LEDHoldCount += 1; }
-    else { LEDHoldCount = 0; }
-    if (LEDHoldCount == 1000) { 
-        rgb_matrix_toggle();/* 
-        if (rgb_matrix_config.enable == true) {
-            rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
-            //rgb_matrix_set_color_all(RGB_BLUE);
-        }*/  
-    }
+	for (int row = 0; row < 2; row++) {
+		int temp;
+		switch (row) {
+			case 0:
+				temp = mcpPins;
+				break;
+			case 1:
+				temp = LEDpin;
+				break;
+		}
+		if (current_matrix[row] != temp) {
+			current_matrix[row] = temp;
+			matrix_has_changed = true;
+		}
+		//uprintf("Row #%d = %x\n", row, temp);
+	}
 
-    //uprintf("current_matrix = %x\n\n\n\n", *current_matrix);
-    return matrix_has_changed;
+	if (LEDpin) { LEDHoldCount += 1; }
+	else { LEDHoldCount = 0; }
+	if (LEDHoldCount == 1500) { rgb_matrix_toggle(); }
+	
+	//uprintf("current_matrix = %x\n\n\n\n", *current_matrix);
+	return matrix_has_changed;
+}
+
+
+led_config_t g_led_config = { {
+	// Key Matrix to LED Index
+	{   0,   1,   2,   3,   4,   5,   6,   7, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED }
+}, {
+	// LED Index to Physical Position
+	//x = 224 / (NUMBER_OF_COLS - 1) * COL_POSITION
+	//y =  64 / (NUMBER_OF_ROWS - 1) * ROW_POSITION
+	{ 0,  32 }, { 32,  32 }, { 64,  32 }, { 96,  32 }, { 128,  32 }, { 160,  32 }, { 192,  32 }, { 224,  32 }
+}, {
+	// LED Index to Flag
+	LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_INDICATOR
+} };
+
+void rgb_matrix_indicators_kb(void) {
+	switch(get_highest_layer(layer_state|default_layer_state)) {
+		case 2:		// Unused layer (for now)
+			rgb_matrix_set_color(7, RGB_BLUE);
+			break;
+		case 1:		//LED layer
+			rgb_matrix_set_color(7, RGB_YELLOW);
+			break;
+		default:	//default layer
+			rgb_matrix_set_color(7, RGB_BLACK);
+			break;
+	}
 }
