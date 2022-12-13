@@ -17,6 +17,11 @@
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
+//#define DEBUG_MATRIX_SCAN_RATE
+
+/* disable this define to disable SOCD */
+#define SOCD
+
 #define MATRIX_ROWS 1
 #define MATRIX_COLS 17
 
