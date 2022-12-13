@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "mcp23018.h"
 #include "i2c_master.h"
+#include <math.h>
 #ifndef NO_PRINT
 #include "print.h"
 #endif
@@ -12,6 +13,10 @@
 extern matrix_row_t matrix[MATRIX_ROWS];
 
 int LEDHoldCount = 0;
+#ifdef SOCD
+bool vSOCD = true;
+bool hSOCD = true;
+#endif
 
 void matrix_init_custom(void) {
 	setPinOutput(GP27);
@@ -40,6 +45,20 @@ bool matrix_scan_custom(uint16_t current_matrix[]) {
 		switch (row) {
 			case 0:
 				temp = mcpPins;
+				#ifdef SOCD
+				if (((temp & 0x00a0) == 0x00a0) && vSOCD) { // SOCD for vertical inputs
+					temp = (temp & ~(current_matrix[row] & 0x00a0));
+					vSOCD = false;
+				}
+				else if (((temp & 0x00a0) == 0x00a0)) { temp = temp & (~(~current_matrix[row] & 0x00a0)); }
+				else { vSOCD = true; }
+				if (((temp & 0x0050) == 0x0050) && hSOCD) { // SOCD for horizontal inputs
+					temp = temp & (~(current_matrix[row] & 0x0050));
+					hSOCD = false;
+				}
+				else if (((temp & 0x0050) == 0x0050)) { temp = temp & (~(~current_matrix[row] & 0x0050)); }
+				else { hSOCD = true; }
+				#endif
 				break;
 			case 1:
 				temp = LEDpin;
