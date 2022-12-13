@@ -95,14 +95,14 @@ led_config_t g_led_config = { {
 
 void rgb_matrix_indicators_kb(void) {
 	switch(get_highest_layer(layer_state|default_layer_state)) {
-		case 2:		// Unused layer (for now)
+		case 2:		//Config Layer
+			rgb_matrix_set_color(7, RGB_BLACK);
+			break;
+		case 1:		//P2 Layer
 			rgb_matrix_set_color(7, RGB_BLUE);
 			break;
-		case 1:		//LED layer
-			rgb_matrix_set_color(7, RGB_YELLOW);
-			break;
-		default:	//default layer
-			rgb_matrix_set_color(7, RGB_BLACK);
+		default:	//P1 Layer (default)
+			rgb_matrix_set_color(7, RGB_RED);
 			break;
 	}
 }
