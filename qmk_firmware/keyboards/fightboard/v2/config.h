@@ -33,17 +33,16 @@
 
 #define F_SCL 400000
 
-#define I2C_DRIVER I2CD2
+#define I2C_DRIVER I2CD1
 #define I2C1_SDA_PIN GP6
 #define I2C1_SCL_PIN GP7
 
 #define WS2812_PIO_USE_PIO1 // Force the usage of PIO1 peripheral, by default the WS2812 implementation uses the PIO0 peripheral
 #define NOP_FUDGE 0.4
 #define RGB_DI_PIN GP26
-#define RGBLED_NUM 8
+#define RGBLED_NUM 13
 #define RGB_MATRIX_LED_COUNT RGBLED_NUM
 #define DRIVER_LED_TOTAL RGBLED_NUM
-#define RGBW
 
 #define WS2812_T1H 600
 #define WS2812_T1L 600
@@ -64,3 +63,5 @@
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE
 #define RGB_MATRIX_SOLID_REACTIVE_GRADIENT_MODE
+
+#define RGBW
