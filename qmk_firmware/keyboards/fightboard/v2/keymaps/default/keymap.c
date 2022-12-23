@@ -1,8 +1,11 @@
+// Copyright 2022 Carlos Ortiz (@Cartex10)
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #include QMK_KEYBOARD_H
 #ifndef LAST_LAYER
 #define LAST_LAYER 6
 #endif
-int LAYER = 0;
+
 const int indicatorHSV[LAST_LAYER+2][3] = {
 	{ 0, 255, 100 },	// RED
 	{ 170, 255, 100 },	// BLUE
@@ -12,13 +15,6 @@ const int indicatorHSV[LAST_LAYER+2][3] = {
 	{ 234, 255, 100 },	// PINK
 	{ 191, 255, 100 },	// PURPLE
 	{ 0, 0, 0 }			// OFF
-};
-
-enum my_keycodes {
-	NEXT_LAYER = SAFE_RANGE,
-	PREV_LAYER,
-	REACTIVE_SIMPLE_RGB,
-	REACTIVE_FULL_RGB
 };
 
 void keyboard_post_init_user(void) {
@@ -67,30 +63,3 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		RGB_SPD, RGB_M_R, RGB_M_SW, REACTIVE_FULL_RGB, RGB_HUI, RGB_VAD, RGB_HUD, RGB_VAI, PREV_LAYER, NEXT_LAYER, KC_BSPC, KC_ESC, RGB_SPI, RGB_M_P, RGB_M_B, REACTIVE_SIMPLE_RGB, TG(LAST_LAYER+1)
 	),
 };
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-	switch (keycode) {
-		case PREV_LAYER:
-			if (record->event.pressed) { 
-				layer_off(LAYER--);
-				if (LAYER < 0) { LAYER = LAST_LAYER; } 
-				layer_on(LAYER);
-			}
-			return false;
-		case NEXT_LAYER:
-			if (record->event.pressed) { 
-				layer_off(LAYER++);
-				if (LAYER > LAST_LAYER) { LAYER = 0; } 
-				layer_on(LAYER);
-			}
-			return false;
-		case REACTIVE_SIMPLE_RGB:
-			if (record->event.pressed) { rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_SIMPLE); }
-			return false;
-		case REACTIVE_FULL_RGB:
-			if (record->event.pressed) { rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE); }
-			return false;
-		default:
-			return true; // Process all other keycodes normally
-	}
-}
