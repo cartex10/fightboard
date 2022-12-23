@@ -1,3 +1,6 @@
+// Copyright 2022 Carlos Ortiz (@Cartex10)
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #include QMK_KEYBOARD_H
 #include "mcp23018.h"
 #include "i2c_master.h"
