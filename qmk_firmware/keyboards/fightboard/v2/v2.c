@@ -6,7 +6,31 @@
 #ifndef LAST_LAYER
 #define LAST_LAYER 6
 #endif
-int LAYER = 0;
+int LAYER;
+
+typedef union {
+	uint32_t raw;
+	struct {
+		uint8_t current_layer:8;
+	};
+} user_config_t;
+
+user_config_t user_config;
+
+void eeconfig_init_kb(void) {  // EEPROM is getting reset!
+	user_config.raw = 0;
+	user_config.current_layer = 0; // We want this enabled by default
+	eeconfig_update_user(user_config.raw); // Write default value to EEPROM now
+}
+
+void keyboard_post_init_kb(void) {
+	// Read the user config from EEPROM
+	user_config.raw = eeconfig_read_user();
+	LAYER = user_config.current_layer;
+
+	// Toggle layer from last shutdown
+	layer_move(LAYER);
+}
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 	switch (keycode) {
@@ -15,6 +39,8 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 				layer_off(LAYER--);
 				if (LAYER < 0) { LAYER = LAST_LAYER; } 
 				layer_on(LAYER);
+				user_config.current_layer = LAYER;
+				eeconfig_update_user(user_config.raw);
 			}
 			return false;
 		case NEXT_LAYER:
@@ -22,6 +48,8 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 				layer_off(LAYER++);
 				if (LAYER > LAST_LAYER) { LAYER = 0; } 
 				layer_on(LAYER);
+				user_config.current_layer = LAYER;
+				eeconfig_update_user(user_config.raw);
 			}
 			return false;
 		case REACTIVE_SIMPLE_RGB:
