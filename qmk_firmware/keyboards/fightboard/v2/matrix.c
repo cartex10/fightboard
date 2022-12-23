@@ -91,27 +91,3 @@ bool matrix_scan_custom(uint16_t current_matrix[]) {
 	//uprintf("current_matrix = %x\n\n\n\n", *current_matrix);
 	return matrix_has_changed;
 }
-
-
-led_config_t g_led_config = { {
-	// Key Matrix to LED Index
-	{ 7, 6, 5, 4, 8, 9, 10, 11, NO_LED, NO_LED, NO_LED, NO_LED, 0, 1, 2, 3, 12 }
-}, {
-	// LED Index to Physical Position
-	//x = 224 / (NUMBER_OF_COLS - 1) * COL_POSITION
-	//y =  64 / (NUMBER_OF_ROWS - 1) * ROW_POSITION
-	{ 112, 42 }, { 139, 42 }, { 166, 42 }, { 193, 42 }, { 204, 19 }, { 177, 19 }, { 150, 19 }, { 123, 19 }, { 72, 19 }, { 45, 19 }, { 18, 19 }, { 34, 42 }, { 45, 51 }
-}, {
-	// LED Index to Flag
-	LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_INDICATOR
-} };
-
-bool rgb_matrix_indicators_kb(void) {
-	int layer = get_highest_layer(layer_state|default_layer_state);
-	int value = 80;
-	if (layer == LAST_LAYER + 1) { value = 0; } 
-	HSV layerHSV = { indicatorHSV[layer][0], indicatorHSV[layer][1], value };
-	RGB layerRGB = hsv_to_rgb(layerHSV);
-	rgb_matrix_set_color(12, layerRGB.r, layerRGB.g, layerRGB.b);
-	return true;
-}

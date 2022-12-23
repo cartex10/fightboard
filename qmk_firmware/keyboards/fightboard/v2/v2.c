@@ -7,6 +7,7 @@
 #define LAST_LAYER 6
 #endif
 int LAYER;
+extern const int indicatorHSV[LAST_LAYER+2][3];
 
 typedef union {
 	uint32_t raw;
@@ -17,10 +18,13 @@ typedef union {
 
 user_config_t user_config;
 
-void eeconfig_init_kb(void) {  // EEPROM is getting reset!
+void eeconfig_init_kb(void) {
+	// EEPROM is getting reset!
 	user_config.raw = 0;
-	user_config.current_layer = 0; // We want this enabled by default
-	eeconfig_update_user(user_config.raw); // Write default value to EEPROM now
+	user_config.current_layer = 0;
+
+	// Write default value to EEPROM now
+	eeconfig_update_user(user_config.raw);
 }
 
 void keyboard_post_init_kb(void) {
@@ -28,8 +32,9 @@ void keyboard_post_init_kb(void) {
 	user_config.raw = eeconfig_read_user();
 	LAYER = user_config.current_layer;
 
-	// Toggle layer from last shutdown
+	// Reload configs from EEPROM
 	layer_move(LAYER);
+	rgb_matrix_reload_from_eeprom();
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
@@ -62,4 +67,14 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 			return true; // Process all other keycodes normally
 	}
     return process_record_user(keycode, record);
+}
+
+bool rgb_matrix_indicators_kb(void) {
+	int layer = get_highest_layer(layer_state|default_layer_state);
+	int value = 80;
+	if (layer == LAST_LAYER + 1) { value = 0; } 
+	HSV layerHSV = { indicatorHSV[layer][0], indicatorHSV[layer][1], value };
+	RGB layerRGB = hsv_to_rgb(layerHSV);
+	rgb_matrix_set_color(12, layerRGB.r, layerRGB.g, layerRGB.b);
+	return true;
 }

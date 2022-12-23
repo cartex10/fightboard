@@ -23,7 +23,6 @@ void keyboard_post_init_user(void) {
 	debug_matrix=true;
 	debug_keyboard=true;
 	//debug_mouse=true;
-	rgb_matrix_reload_from_eeprom();
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -62,4 +61,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[7] = LAYOUT(	// Config Layer (MUST ALWAYS BE LAST)
 		RGB_SPD, RGB_M_R, RGB_M_SW, REACTIVE_FULL_RGB, RGB_HUI, RGB_VAD, RGB_HUD, RGB_VAI, PREV_LAYER, NEXT_LAYER, KC_BSPC, KC_ESC, RGB_SPI, RGB_M_P, RGB_M_B, REACTIVE_SIMPLE_RGB, TG(LAST_LAYER+1)
 	),
+};
+
+led_config_t g_led_config = { {
+	// Key Matrix to LED Index
+	{ 7, 6, 5, 4, 8, 9, 10, 11, NO_LED, NO_LED, NO_LED, NO_LED, 0, 1, 2, 3, 12 }
+	}, {
+	// LED Index to Physical Position
+	//x = 224 / (NUMBER_OF_COLS - 1) * COL_POSITION
+	//y =  64 / (NUMBER_OF_ROWS - 1) * ROW_POSITION
+	{ 112, 42 }, { 139, 42 }, { 166, 42 }, { 193, 42 }, { 204, 19 }, { 177, 19 }, { 150, 19 }, { 123, 19 }, { 72, 19 }, { 45, 19 }, { 18, 19 }, { 34, 42 }, { 45, 51 }
+	}, {
+	// LED Index to Flag
+	LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_INDICATOR
+	} 
 };
