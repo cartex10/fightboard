@@ -1,11 +1,11 @@
 // Copyright 2022 Carlos Ortiz (@Cartex10)
 // SPDX-License-Identifier: GPL-2.0-or-later
 #include QMK_KEYBOARD_H
-
-#include QMK_KEYBOARD_H
+#include "xinput.h"
 #ifndef LAST_LAYER
 #define LAST_LAYER 6
 #endif
+
 int LAYER;
 extern const int indicatorHSV[LAST_LAYER+2][3];
 
@@ -35,6 +35,9 @@ void keyboard_post_init_kb(void) {
 	// Reload configs from EEPROM
 	layer_move(LAYER);
 	rgb_matrix_reload_from_eeprom();
+
+	// Setup controller
+	begin();
 }
 
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
@@ -56,6 +59,70 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 				user_config.current_layer = LAYER;
 				eeconfig_update_user(user_config.raw);
 			}
+			return false;
+		case GP_A:
+			if (record->event.pressed){ press(BUTTON_A); }
+			else { release(BUTTON_A); }
+			return false;
+		case GP_B:
+			if (record->event.pressed){ press(BUTTON_B); }
+			else { release(BUTTON_B); }
+			return false;
+		case GP_X:
+			if (record->event.pressed){ press(BUTTON_X); }
+			else { release(BUTTON_X); }
+			return false;
+		case GP_Y:
+			if (record->event.pressed){ press(BUTTON_Y); }
+			else { release(BUTTON_Y); }
+			return false;
+		case GP_LB:
+			if (record->event.pressed){ press(BUTTON_LB); }
+			else { release(BUTTON_LB); }
+			return false;
+		case GP_RB:
+			if (record->event.pressed){ press(BUTTON_RB); }
+			else { release(BUTTON_RB); }
+			return false;
+		case GP_BACK:
+			if (record->event.pressed){ press(BUTTON_BACK); }
+			else { release(BUTTON_BACK); }
+			return false;
+		case GP_START:
+			if (record->event.pressed){ press(BUTTON_START); }
+			else { release(BUTTON_START); }
+			return false;
+		case GP_LS:
+			if (record->event.pressed){ press(BUTTON_L3); }
+			else { release(BUTTON_L3); }
+			return false;
+		case GP_RS:
+			if (record->event.pressed){ press(BUTTON_R3); }
+			else { release(BUTTON_R3); }
+			return false;
+		case GP_UP:
+			if (record->event.pressed){ press(DPAD_UP); }
+			else { release(DPAD_UP); }
+			return false;
+		case GP_DOWN:
+			if (record->event.pressed){ press(DPAD_DOWN); }
+			else { release(DPAD_DOWN); }
+			return false;
+		case GP_LEFT:
+			if (record->event.pressed){ press(DPAD_LEFT); }
+			else { release(DPAD_LEFT); }
+			return false;
+		case GP_RIGHT:
+			if (record->event.pressed){ press(DPAD_RIGHT); }
+			else { release(DPAD_RIGHT); }
+			return false;
+		case GP_LT:
+			if (record->event.pressed){ setTrigger(TRIGGER_LEFT, 255); }
+			else { setTrigger(TRIGGER_LEFT, 0); }
+			return false;
+		case GP_RT:
+			if (record->event.pressed){ setTrigger(TRIGGER_RIGHT, 255); }
+			else { setTrigger(TRIGGER_RIGHT, 0); }
 			return false;
 		case REACTIVE_SIMPLE_RGB:
 			if (record->event.pressed) { rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_SIMPLE); }
