@@ -64,6 +64,14 @@ bool matrix_scan_custom(uint16_t current_matrix[]) {
 				else if (((temp & 0x0050) == 0x0050)) { temp = temp & (~(~current_matrix[row] & 0x0050)); }
 				else { hSOCD = true; }
 				#endif
+				#ifdef SOCD2
+				if (((temp & 0x00a0) == 0x00a0)) { // SOCD for vertical inputs
+					temp = (temp & ~(temp & 0x0080));
+				}
+				if (((temp & 0x0050) == 0x0050)) { // SOCD for horizontal inputs
+					temp = temp & (~(temp & 0x0050));
+				}
+				#endif
 				// Change all leds if lower layer is changed
 				if (LAST_LAYER + 1 == get_highest_layer(layer_state|default_layer_state)) {
 					if (((temp | 0xfeff) == 0xffff) || ((temp | 0xfdff) == 0xffff)) {
@@ -81,7 +89,7 @@ bool matrix_scan_custom(uint16_t current_matrix[]) {
 			current_matrix[row] = temp;
 			matrix_has_changed = true;
 		}
-		//uprintf("Row #%d = %x\n", row, temp);
+		uprintf("Row #%d = %x\n", row, temp);
 	}
 
 	if (LEDpin) { LEDHoldCount += 1; }

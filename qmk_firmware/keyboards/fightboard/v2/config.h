@@ -19,7 +19,7 @@
 //#define DEBUG_MATRIX_SCAN_RATE
 
 /* disable this define to disable SOCD */
-#define SOCD
+#define SOCD2
 
 #define MATRIX_ROWS 1
 #define MATRIX_COLS 17
@@ -38,7 +38,7 @@
 
 #define WS2812_PIO_USE_PIO1 // Force the usage of PIO1 peripheral, by default the WS2812 implementation uses the PIO0 peripheral
 #define NOP_FUDGE 0.4
-#define RGB_DI_PIN GP26
+#define WS2812_DI_PIN GP26
 #define RGBLED_NUM 13
 #define RGB_MATRIX_LED_COUNT RGBLED_NUM
 #define DRIVER_LED_TOTAL RGBLED_NUM
